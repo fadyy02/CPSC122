@@ -1,141 +1,127 @@
+/*
+Team Members: Steph Borla and Fady Youssef
+Course: CPSC 122
+Date Submitted: 3/20/2024
+Assignment Name: Project 6
+Description Program implements the Affine Cipher
+*/
+
 #include <iostream>
 using namespace std;
 
 #include "main.h"
 
-//Constructor
+// This is the List constructor
 List::List() 
 {       
- length = 0;
- head = NULL;
+ length = 0; // Start with an empty list
+ head = NULL; // No items yet, so the head points to nothing
 }
 
-//No need to write this function
-//List::~List() //this function is written as DeleteItemH()
-
+// Function to add an item to the beginning of the list
 void List::PutItemH(itemType itemIn)
 {
- node* tmp = new node;
- tmp->item = itemIn;
- tmp->next = head;
- head = tmp;
- length++;
+ node* tmp = new node; // Create a new storage for the item
+ tmp->item = itemIn; // Store the item
+ tmp->next = head; // Link the new item to the previous first item
+ head = tmp; // Update the head to point to the new item
+ length++; // Increase the length of the list
 }
 
+// Function to print all items in the list
 void List::Print() const
 {
- node* cur = head;
- while(cur != NULL)
+ node* cur = head; // Start at the beginning of the list
+ while(cur != NULL) // Keep going until the end of the list
   {
-   cout << cur->item << endl;
-   cur = cur->next;
+   cout << cur->item << endl; // Print the item
+   cur = cur->next; // Move to the next item
   }
 }
 
- /*
- pre: an instance of List exists and is not empty
- post: returns the number of nodes in the list that stores target 
- */
+// Function to count how many times a specific item appears in the list
 int List::Find(const itemType target) const
  {
-   int count = 0; 
-   node* cur = head;
-   while (cur!=NULL)
+   int count = 0; // Start counting from zero
+   node* cur = head; // Start at the beginning of the list
+   while (cur!=NULL) // Keep going until the end of the list
      {
-       if(cur->item == target)
-         count++;
-       cur=cur->next;
+       if(cur->item == target) // If the current item matches the target
+         count++; // Increase the count
+       cur=cur->next; // Move to the next item
      }
-   return count;
+   return count; // Return the total count
  }
 
- /*
- pre:  an instance of List exists and is not empty 
- post: deletes all nodes that store target.  Returns
-       the number of nodes deleted 
- */
- int List::DeleteItem(const itemType target)
+// Function to delete all occurrences of a specific item from the list
+int List::DeleteItem(const itemType target)
  {
-   int count = 0;
-   node* cur = head;
-   node* prev = NULL;
-   
-   while(cur != NULL)
+   int count = 0; // Start counting deleted items from zero
+   node* cur = head; // Start at the beginning of the list
+   node* prev = NULL; // Initialize a pointer to the previous item
+
+   while(cur != NULL) // Keep going until the end of the list
      {
-       if(cur->item == target)
+       if(cur->item == target) // If the current item matches the target
        {
-         if(prev == NULL)
+         if(prev == NULL) // If the target is at the beginning of the list
          {
-           head = head->next;
-           delete cur;
-           cur = head;
+           head = head->next; // Update the head to skip the current item
+           delete cur; // Delete the current item
+           cur = head; // Move to the new first item
          }
-         else
+         else // If the target is after the beginning
          {
-           prev->next = cur->next;
-           delete cur;
-           cur = prev->next;
+           prev->next = cur->next; // Update the link to skip the current item
+           delete cur; // Delete the current item
+           cur = prev->next; // Move to the next item
          }
-         count++;
-         length--;
+         count++; // Increase the count of deleted items
+         length--; // Decrease the length of the list
        }
-       else
+       else // If the current item does not match the target
        {
-         prev = cur;
-         cur = cur->next;
+         prev = cur; // Remember this item as the previous one
+         cur = cur->next; // Move to the next item
        }
      }
-   return count;
+   return count; // Return the total count of deleted items
  }
 
-
- /*
- pre: an instance of List exists and is not empty
- post: Returns the contents pointed to by the head of the list 
- */
- itemType List::GetItemH() const
+// Function to get the first item in the list
+itemType List::GetItemH() const
  {
-  if (head != NULL)
-   return head -> item; 
+  if (head != NULL) // If the list is not empty
+   return head -> item; // Return the item stored in the first item
 else
-    return itemType();
+    return itemType(); // If the list is empty, return a default item
  }
 
- /*
- pre: an instance of list exists and is not empty
- post: Node pointed to by head is deleted 
- */
+// Function to delete the first item in the list
  void List::DeleteItemH()
  {
-   if (head != NULL)
+   if (head != NULL) // If the list is not empty
    {
-     node* tmp = head;
-     head = head->next;
-     delete tmp; 
-     length--;
+     node* tmp = head; // Remember the first item
+     head = head->next; // Update the head to the second item
+     delete tmp; // Delete the first item
+     length--; // Decrease the length of the list
    }
-   else
-     cout << "List is empty" << endl;
+   else // If the list is empty
+     cout << "List is empty" << endl; // Print a message
  }
 
- //General operations on List,  starting with the easiest  
- /*
- pre: an instance of List exists
- post: returns true if list is empty, false otherwise
- */ 
+// Function to check if the list is empty
  bool List::IsEmpty() const
  {
-   return (head == NULL);
+   return (head == NULL); // Return true if the list is empty, false otherwise
  }
 
- /*
- pre: an instance of List exists
- post: returns length of the list 
- */
+// Function to get the length of the list
 int List::GetLength() const
  {
-   return length;
+   return length; // Return the length of the list
  }
 
-//g++ main.cpp tstFile.cpp -o myList
+// g++ main.cpp tstFile.cpp -o myList
 // ./myList
