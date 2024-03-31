@@ -99,7 +99,20 @@ pre:  an instance of List exists and is not empty
 post: deletes all nodes that store target.  Returns
       the number of nodes deleted
 */
-int DeleteItem(const itemType target) { return 0; }
+int ListT::DeleteItem(const itemType target) { 
+	int dCount =0; 
+	node *curr = head;
+	node *prev = NULL;
+	node *tmp = curr; 
+
+	if (prev == NULL){
+		tail = NULL;
+	}
+	else if (head == NULL) {
+		cout << "List is Empty \n";
+	}
+	return 0; 
+}
 
 int FindItem(const itemType target) {
   node *head = new node;
